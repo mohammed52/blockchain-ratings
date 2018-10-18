@@ -5,7 +5,7 @@ import truffleContract from "truffle-contract";
 // import Navigation from '../containers/Navigation';
 // import Message from '../containers/Message';
 import styles from "../css/main";
-import ymtm from "../images/ymtm.png";
+import bratingsLogo from "../images/bratingsLogo.jpg";
 import favicon from "../images/favicon.png";
 // import MEK from '../images/MEK.png';
 import SimpleStorageContract from "../contracts/SimpleStorage.json";
@@ -44,6 +44,7 @@ class App extends Component {
     };
     this.handleLoad = this.handleLoad.bind(this);
     this.runExample = this.runExample.bind(this);
+    this.btnFetchValue = this.btnFetchValue.bind(this);
   }
 
   componentDidMount = async () => {
@@ -87,6 +88,14 @@ class App extends Component {
     this.setState({ storageValue: response.toNumber() });
   };
 
+  async btnFetchValue() {
+    console.log("fetchValue");
+    const { accounts, contract } = this.state;
+    const response = await contract.get();
+    // Update state with the result.
+    this.setState({ storageValue: response.toNumber() });
+  }
+
   handleLoad() {
     console.log("handleLoad"); //  $ is available here
     this.setState({
@@ -105,18 +114,47 @@ class App extends Component {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 37</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+      <div>
+        {!this.state.cssHasLoaded ? (
+          <div />
+        ) : (
+          <div className={styles.mainWrapper}>
+            <div className={styles.headerWrapper2}>
+              <div className={styles.headerWrapper}>
+                <img
+                  src={bratingsLogo}
+                  width="90"
+                  height="90"
+                  className="img-fluid"
+                />
+                <strong>Helpline: 0313-7590210</strong>
+              </div>
+            </div>
+            {this.props.children}
+          </div>
+        )}
+
+        <div className="App">
+          <h1>Good to Go!</h1>
+          <p>Your Truffle Box is installed and ready.</p>
+          <h2>Smart Contract Example</h2>
+          <p>
+            If your contracts compiled and migrated successfully, below will
+            show a stored value of 5 (by default).
+          </p>
+          <p>
+            Try changing the value stored on <strong>line 37</strong> of App.js.
+          </p>
+          <div>The stored value is: {this.state.storageValue}</div>
+
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={this.btnFetchValue}
+          >
+            Fetch Value
+          </button>
+        </div>
       </div>
     );
   }
