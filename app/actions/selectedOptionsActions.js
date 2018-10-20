@@ -1,27 +1,27 @@
-export const setPurpose = (obj) => {
+export const setPurpose = obj => {
   return {
-    type: 'SET_PURPOSE',
+    type: "SET_PURPOSE",
     payload: obj
-  }
-}
+  };
+};
 
-export const setSourceOfIncome = (obj) => {
+export const setSourceOfIncome = obj => {
   return {
-    type: 'SET_SOURCE_OF_INCOME',
+    type: "SET_SOURCE_OF_INCOME",
     payload: obj
-  }
-}
+  };
+};
 
-export const setRepeatApply = (obj) => {
+export const setRepeatApply = obj => {
   return {
-    type: 'SET_REPEAT_APPLY',
+    type: "SET_REPEAT_APPLY",
     payload: obj
-  }
-}
+  };
+};
 
-export const setAmount = (obj) => {
+export const setAmount = obj => {
   return {
-    type: 'SET_AMOUNT',
+    type: "SET_AMOUNT",
     payload: obj
-  }
-}
+  };
+};

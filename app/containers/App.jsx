@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames/bind";
 import truffleContract from "truffle-contract";
+import { connect } from "react-redux";
 // import Navigation from '../containers/Navigation';
 // import Message from '../containers/Message';
 import styles from "../css/main";
@@ -10,6 +11,7 @@ import favicon from "../images/favicon.png";
 // import MEK from '../images/MEK.png';
 import SimpleStorageContract from "../contracts/SimpleStorage.json";
 import getWeb3 from "../utils/getWeb3";
+import { setBlockchainController } from "../actions/blockchainControllerActions";
 
 var ReactBootstrap = require("react-bootstrap");
 var Navbar = ReactBootstrap.Navbar;
@@ -37,13 +39,13 @@ class App extends Component {
     super(props);
     this.state = {
       cssHasLoaded: false,
-      storageValue: 0,
-      web3: null,
-      accounts: null,
-      contract: null
+      storageValue: 0
+      // web3: null,
+      // accounts: null,
+      // contract: null
     };
     this.handleLoad = this.handleLoad.bind(this);
-    this.runExample = this.runExample.bind(this);
+    // this.runExample = this.runExample.bind(this);
     this.btnFetchValue = this.btnFetchValue.bind(this);
   }
 
@@ -65,7 +67,13 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      // this.setState({ web3, accounts, contract: instance }, this.runExample);
+
+      this.props.setBlockchainController({
+        web3,
+        accounts,
+        contract: instance
+      });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -75,18 +83,18 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
+  // runExample = async () => {
+  //   const { accounts, contract } = this.state;
 
-    // Stores a given value, 5 by default.
-    await contract.set(5, { from: accounts[0] });
+  //   // Stores a given value, 5 by default.
+  //   await contract.set(5, { from: accounts[0] });
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.get();
+  //   // Get the value from the contract to prove it worked.
+  //   const response = await contract.get();
 
-    // Update state with the result.
-    this.setState({ storageValue: response.toNumber() });
-  };
+  //   // Update state with the result.
+  //   this.setState({ storageValue: response.toNumber() });
+  // };
 
   async btnFetchValue() {
     console.log("fetchValue");
@@ -164,4 +172,16 @@ App.propTypes = {
   children: PropTypes.object
 };
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    blockchainController: state.blockchainController
+    // newTopic: state.topic.newTopic
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    setBlockchainController
+  }
+)(App);
