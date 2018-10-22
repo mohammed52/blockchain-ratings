@@ -47,6 +47,7 @@ class App extends Component {
     this.handleLoad = this.handleLoad.bind(this);
     // this.runExample = this.runExample.bind(this);
     this.btnFetchValue = this.btnFetchValue.bind(this);
+    this.btnSetValue = this.btnSetValue.bind(this);
   }
 
   componentDidMount = async () => {
@@ -83,22 +84,22 @@ class App extends Component {
     }
   };
 
-  // runExample = async () => {
-  //   const { accounts, contract } = this.state;
+  btnSetValue = async () => {
+    const { accounts, contract } = this.props.blockchainController;
 
-  //   // Stores a given value, 5 by default.
-  //   await contract.set(5, { from: accounts[0] });
+    // Stores a given value, 5 by default.
+    await contract.set(5, { from: accounts[0] });
 
-  //   // Get the value from the contract to prove it worked.
-  //   const response = await contract.get();
+    // Get the value from the contract to prove it worked.
+    // const response = await contract.get();
 
-  //   // Update state with the result.
-  //   this.setState({ storageValue: response.toNumber() });
-  // };
+    // // Update state with the result.
+    // this.setState({ storageValue: response.toNumber() });
+  };
 
   async btnFetchValue() {
     console.log("fetchValue");
-    const { accounts, contract } = this.state;
+    const { accounts, contract } = this.props.blockchainController;
     const response = await contract.get();
     // Update state with the result.
     this.setState({ storageValue: response.toNumber() });
@@ -118,7 +119,7 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.web3) {
+    if (!this.props.blockchainController.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
@@ -159,6 +160,14 @@ class App extends Component {
             className="btn btn-primary"
             type="button"
             onClick={this.btnFetchValue}
+          >
+            Fetch Value
+          </button>
+          <br />
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={this.btnSetValue}
           >
             Fetch Value
           </button>
