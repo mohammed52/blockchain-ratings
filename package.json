@@ -24,7 +24,7 @@
         "babel-eslint": "^7.2.1",
         "babel-register": "^6.24.0",
         "enzyme": "^2.8.0",
-        "eslint": "^3.19.0",
+        "eslint": "^4.10.0",
         "eslint-config-airbnb": "^14.1.0",
         "eslint-plugin-import": "^2.2.0",
         "eslint-plugin-jsx-a11y": "^4.0.0",
@@ -36,8 +36,8 @@
         "react-test-renderer": "^15.5.3",
         "react-transform-catch-errors": "^1.0.2",
         "redux-mock-store": "1.2.2",
-        "sinon": "^2.1.0",
-        "run-script-os": "^1.0.3"
+        "run-script-os": "^1.0.3",
+        "sinon": "^2.1.0"
     },
     "engines": {
         "node": ">=6.x"
@@ -81,7 +81,6 @@
         "dotenv": "4.0.0",
         "dotenv-expand": "4.2.0",
         "es6-promise": "^4.1.0",
-        "eslint": "4.10.0",
         "eslint-config-react-app": "^2.1.0",
         "eslint-loader": "1.9.0",
         "eslint-plugin-flowtype": "2.39.1",
