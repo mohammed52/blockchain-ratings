@@ -1,14 +1,15 @@
 {
-    "name": "door-quote-automator",
+    "name": "blockchain-ratings",
     "version": "1.0.0",
-    "description": "door quote automator",
-    "repository": "https://github.com/mohammed52/door-quote-automator",
+    "description": "blockchain ratings",
+    "repository": "https://github.com/mohammed52/blockchain-ratings",
     "main": "index.js",
     "scripts": {
         "sequelize": "node_modules/.bin/sequelize",
         "lint": "eslint --ext .js,.jsx app server",
         "lint:fix": "eslint --ext .js,.jsx app server --fix",
         "clean": "rimraf public && rimraf compiled",
+        "truffle": "truffle migrate --compile-all --reset --network ganache",
         "start": "node compiled/server.js",
         "postinstall": "npm run build && cross-env NODE_ENV=production",
         "dev": "cross-env NODE_ENV=development nodemon",
@@ -16,7 +17,8 @@
         "build": "npm run clean && cross-env NODE_ENV=production npm run webpack -- --env.browser && cross-env NODE_ENV=production npm run webpack -- --env.server",
         "webpack": "webpack --colors --display-error-details --config ./webpack/webpack.config.js",
         "test": "mocha ./app/tests/setup.js --compilers css:./app/tests/compilers/css ./app/**/*-test.js",
-        "test:watch": "mocha ./app/tests/setup.js --watch --compilers css:./app/tests/compilers/css ./app/**/*-test.js"
+        "test:watch": "mocha ./app/tests/setup.js --watch --compilers css:./app/tests/compilers/css ./app/**/*-test.js",
+        "truffle-bash": "truffle-bash.sh && npm run dev"
     },
     "author": "Choon Ken Ding",
     "license": "MIT",
