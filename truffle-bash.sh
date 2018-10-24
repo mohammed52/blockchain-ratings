@@ -11,4 +11,4 @@ echo "DONE!"
 echo "Copying contracts to app..."
 cp -r -f build/contracts app
 echo "DONE!"
-sleep 5
+sleep 1
