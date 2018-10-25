@@ -13,8 +13,9 @@ contract("SimpleStorage", accounts => {
 		assert.equal(storedData, 90, "The value 90 was not stored.");
 	});
 
-	var testVendorAddress = accounts[0];
-	var testClientAddress = accounts[1];
+	var testVendorAddress = accounts[0]; // asks for feedback
+	var testClientAddress = accounts[1]; // gives feedback
+	var testClient2Address = accounts[2]; // asks for feedback
 	var testProjectName = "testProjectName";
 	var testProjectDescription = "testProjectDescription";
 
@@ -95,5 +96,49 @@ contract("SimpleStorage", accounts => {
 		assert.equal(feedbackrequest[5], true, "pending should be false");
 
 		// new request should be in the feedbackRequests map
+	});
+
+	const testRating1 = 85;
+	const testIncorrectRating1 = 110;
+	const testIncorrectRating2 = -20;
+	const testFeedback = "Great Job, well done !";
+	const testIncorrectFeedback =
+		"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat";
+
+	// test user can give feedback
+	it("should allow user to give feedback", async () => {
+		const simpleStorageInstance = await SimpleStorage.deployed();
+
+		// call submitFeedback from client address
+		const receipt = await simpleStorageInstance.submitFeedback(
+			1,
+			testRating1,
+			testFeedback,
+			{ from: testClientAddress }
+		);
+		// test 1 event should be triggered
+		assert.equal(
+			receipt.logs.length,
+			1,
+			"one event should have been triggered"
+		);
+
+		// test event should be LogFeedbackSubmission
+		assert.equal(
+			receipt.logs[0].event,
+			"LogFeedbackSubmission",
+			"event should be LogFeedbackSubmission"
+		);
+
+		assert.equal(
+			receipt.logs[0].args.rating,
+			testRating1,
+			"rating should be " + testRating1
+		);
+		assert.equal(
+			receipt.logs[0].args.feedback,
+			testFeedback,
+			"feedback should be " + testFeedback
+		);
 	});
 });
