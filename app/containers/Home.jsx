@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import classNames from "classnames/bind";
 import { browserHistory } from "react-router";
 import styles from "../css/components/homeStyles";
-import ymtm from "../images/ymtm.png";
-import { DEFAULT_SETTINGS } from "./helpers/defaultSettings";
-import {
-  setAmount,
-  setSourceOfIncome,
-  setPurpose,
-  setRepeatApply
-} from "../actions/selectedOptionsActions";
+// import ymtm from "../images/ymtm.png";
+// import { DEFAULT_SETTINGS } from "./helpers/defaultSettings";
+// import {
+//   setAmount,
+//   setSourceOfIncome,
+//   setPurpose,
+//   setRepeatApply
+// } from "../actions/selectedOptionsActions";
 // import OptionsFormComponent from '../components/OptionsFormComponent'
 
 var ReactBootstrap = require("react-bootstrap");
@@ -29,6 +29,13 @@ var Checkbox = ReactBootstrap.Checkbox;
 class Home extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      defaultClientAddress: "",
+      defaultProjectTitle: "",
+      defaultProjectDetails: ""
+    };
+
     this.handlePurposeOptionChange = this.handlePurposeOptionChange.bind(this);
     this.handleincomeSourceOptionChange = this.handleincomeSourceOptionChange.bind(
       this
@@ -101,12 +108,45 @@ class Home extends Component {
   }
 
   render() {
-    return <div className={[styles.homeWrapper].join(" ")}>Home Page</div>;
+    return (
+      <div className={[styles.homeWrapper].join(" ")}>
+        Home Page
+        <div className="well">
+          <strong>Enter Client Address:</strong>
+          <br />
+          <input
+            onChange={this.onChangeClientAddress}
+            defaultValue={this.state.defaultClientAddress}
+            required="true"
+            ref={""}
+          />
+          <br />
+          <strong>Enter Project Title:</strong>
+          <br />
+          <input
+            onChange={this.onChangeProjectTitle}
+            defaultValue={this.state.defaultProjectTitle}
+            required="true"
+            ref={""}
+          />
+          <br />
+          <strong>Enter Project Details:</strong>
+          <br />
+          <input
+            onChange={this.onChangeProjectDetails}
+            defaultValue={this.state.defaultProjectDetails}
+            required="true"
+            ref={""}
+          />
+          <br />
+        </div>
+      </div>
+    );
   }
 }
 
 Home.propTypes = {
-  selectedOptions: PropTypes.object.isRequired
+  // selectedOptions: PropTypes.object.isRequired
   // topics: PropTypes.array.isRequired,
   // typing: PropTypes.func.isRequired,
   // createTopic: PropTypes.func.isRequired,
@@ -118,7 +158,7 @@ Home.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    selectedOptions: state.selectedOptions
+    // selectedOptions: state.selectedOptions
     // newTopic: state.topic.newTopic
   };
 }
@@ -128,9 +168,9 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   {
-    setPurpose,
-    setSourceOfIncome,
-    setAmount,
-    setRepeatApply
+    // setPurpose,
+    // setSourceOfIncome,
+    // setAmount,
+    // setRepeatApply
   }
 )(Home);

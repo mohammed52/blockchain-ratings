@@ -56,7 +56,8 @@
 		"arrow-parens": 0,
 		"jsx-a11y/img-has-alt": 0,
 		"no-undef": "error",
-		"spaced-comment": 1
+		"spaced-comment": 1,
+		"react/no-string-refs": 0
 	},
 	"plugins": ["react", "jsx-a11y"],
 	"globals": {
