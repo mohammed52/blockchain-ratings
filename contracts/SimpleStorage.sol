@@ -28,7 +28,7 @@ contract SimpleStorage {
 
 	mapping (uint => FeedbackSubmission) public feedbackSubmissions;
 
-	uint public feedbackSubmissionCounter;
+	uint public feedbackSubmissionsCounter;
 	// -----------------------------------------------------------------------
 
 	// events
@@ -58,6 +58,9 @@ contract SimpleStorage {
 
 	// create a new request for feedback
 	function createFeedbackRequest(address _clientAddress, string _projectName, string _projectDescription) public {
+
+		// vendor can not assign a feedbackRequest to it self
+		require(msg.sender != _clientAddress);
 
 		feedbackRequestsCounter++;
 
@@ -91,16 +94,23 @@ contract SimpleStorage {
 		require(msg.sender == feedbackRequests[_feedbackRequestId].clientAddress);
 
 		// verify feedback not already given
-		// require (feedbackRequests[_feedbackRequestId].pending == true);
+		require (feedbackRequests[_feedbackRequestId].pending == true);
 
-		// update request feedbackRequestsCounter
-		// feedbackSubmissionCounter++;
-
-
-		emit LogFeedbackSubmission(feedbackSubmissionCounter, _feedbackRequestId, _rating, _feedback);
+		FeedbackRequest storage feedbackRequest = feedbackRequests[_feedbackRequestId];
+		feedbackRequest.pending = false;
 
 		// give feeedback
-		// emit log event
+		// update request feedbackSubmissionsCounter
+		feedbackSubmissionsCounter++;
 
+		feedbackSubmissions[feedbackSubmissionsCounter] = FeedbackSubmission(
+			feedbackSubmissionsCounter,
+			feedbackRequest.id,
+			_rating,
+			_feedback
+			);
+
+		// emit log event
+		emit LogFeedbackSubmission(feedbackSubmissionsCounter, _feedbackRequestId, _rating, _feedback);
 	}
 }

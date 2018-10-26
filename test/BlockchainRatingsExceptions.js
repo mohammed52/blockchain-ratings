@@ -117,15 +117,13 @@ contract("SimpleStorage Exceptions", accounts => {
 			);
 		}
 
-		// second feedback for repeat test, should prevent repeat feedback
+		// 1st feedback feedback for repeat test, should prevent next feedback
 		await simpleStorageInstance.submitFeedback(
 			1,
 			testRating1,
 			testFeedback,
 			{ from: testClientAddress }
 		);
-
-		console.log("testing 1");
 
 		try {
 			await simpleStorageInstance.submitFeedback(
@@ -134,20 +132,14 @@ contract("SimpleStorage Exceptions", accounts => {
 				testFeedback,
 				{ from: testClientAddress }
 			);
-			console.log("testing 2");
-
-			assert(
-				false,
+			console.log(
 				"error - should have thrown error on submitting feedback previously submitted"
 			);
-			console.log("testing 3");
 		} catch (error) {
-			console.log("testing 4");
 			assert(
 				error.message.indexOf("revert") >= 0,
 				"error - should have thrown revert on previously submitted feedbackRequest"
 			);
-			console.log("testing 5");
 		}
 	});
 });
