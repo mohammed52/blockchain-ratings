@@ -1,14 +1,14 @@
-const SimpleStorage = artifacts.require("./SimpleStorage.sol");
+const BlockchainRatings = artifacts.require("./BlockchainRatings.sol");
 
-contract("SimpleStorage", accounts => {
+contract("BlockchainRatings FeedbackRequestsTests", accounts => {
 	it("...should store the value 90.", async () => {
-		const simpleStorageInstance = await SimpleStorage.deployed();
+		const blockchainRatingsInstance = await BlockchainRatings.deployed();
 
 		// Set value of 90
-		await simpleStorageInstance.set(90, { from: accounts[0] });
+		await blockchainRatingsInstance.set(90, { from: accounts[0] });
 
 		// Get stored value
-		const storedData = await simpleStorageInstance.get.call();
+		const storedData = await blockchainRatingsInstance.get.call();
 
 		assert.equal(storedData, 90, "The value 90 was not stored.");
 	});
@@ -21,9 +21,9 @@ contract("SimpleStorage", accounts => {
 
 	// it should create a new create a new request for project feed back from an address
 	it("should create a new feedback request", async () => {
-		const simpleStorageInstance = await SimpleStorage.deployed();
+		const blockchainRatingsInstance = await BlockchainRatings.deployed();
 
-		const receipt = await simpleStorageInstance.createFeedbackRequest(
+		const receipt = await blockchainRatingsInstance.createFeedbackRequest(
 			testClientAddress,
 			testProjectName,
 			testProjectDescription
@@ -62,7 +62,7 @@ contract("SimpleStorage", accounts => {
 		);
 
 		// verify feedbackRequestsCounter has correct value in the contract
-		const feedbackRequestsCounter = await simpleStorageInstance.feedbackRequestsCounter();
+		const feedbackRequestsCounter = await blockchainRatingsInstance.feedbackRequestsCounter();
 
 		assert.equal(
 			feedbackRequestsCounter,
@@ -71,7 +71,9 @@ contract("SimpleStorage", accounts => {
 		);
 
 		// verify the feedbackRequests mapping has the correct feedbackRequest stored
-		const feedbackrequest = await simpleStorageInstance.feedbackRequests(1);
+		const feedbackrequest = await blockchainRatingsInstance.feedbackRequests(
+			1
+		);
 		assert.equal(feedbackrequest[0], 1, "feedbackRequest id should be 1");
 		assert.equal(
 			feedbackrequest[1],
@@ -107,10 +109,10 @@ contract("SimpleStorage", accounts => {
 
 	// test user can give feedback
 	it("should allow user to give feedback", async () => {
-		const simpleStorageInstance = await SimpleStorage.deployed();
+		const blockchainRatingsInstance = await BlockchainRatings.deployed();
 
 		// call submitFeedback from client address
-		const receipt = await simpleStorageInstance.submitFeedback(
+		const receipt = await blockchainRatingsInstance.submitFeedback(
 			1,
 			testRating1,
 			testFeedback,

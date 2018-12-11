@@ -1,6 +1,6 @@
-const SimpleStorage = artifacts.require("./SimpleStorage.sol");
+const BlockchainRatings = artifacts.require("./BlockchainRatings.sol");
 
-contract("SimpleStorage Exceptions", accounts => {
+contract("BlockchainRatings FeedbackSubmissionExceptions", accounts => {
 	var testVendorAddress = accounts[0]; // asks for feedback
 	var testClientAddress = accounts[1]; // gives feedback
 	var testClient2Address = accounts[2]; // asks for feedback
@@ -15,10 +15,10 @@ contract("SimpleStorage Exceptions", accounts => {
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat";
 
 	it("error on incorrect feedback submission", async () => {
-		const simpleStorageInstance = await SimpleStorage.deployed();
+		const blockchainRatingsInstance = await BlockchainRatings.deployed();
 
 		// create second feedbackRequest
-		const receipt1 = await simpleStorageInstance.createFeedbackRequest(
+		const receipt1 = await blockchainRatingsInstance.createFeedbackRequest(
 			testClientAddress,
 			testProjectName,
 			testProjectDescription,
@@ -27,7 +27,7 @@ contract("SimpleStorage Exceptions", accounts => {
 
 		// test caller address matches client address in the request
 		try {
-			await simpleStorageInstance.submitFeedback(
+			await blockchainRatingsInstance.submitFeedback(
 				1,
 				testRating1,
 				testFeedback,
@@ -46,7 +46,7 @@ contract("SimpleStorage Exceptions", accounts => {
 
 		// test incorrect request id
 		try {
-			await simpleStorageInstance.submitFeedback(
+			await blockchainRatingsInstance.submitFeedback(
 				2,
 				testRating1,
 				testFeedback,
@@ -64,7 +64,7 @@ contract("SimpleStorage Exceptions", accounts => {
 		}
 
 		try {
-			await simpleStorageInstance.submitFeedback(
+			await blockchainRatingsInstance.submitFeedback(
 				1,
 				testIncorrectRating1,
 				testFeedback,
@@ -82,7 +82,7 @@ contract("SimpleStorage Exceptions", accounts => {
 		}
 
 		try {
-			await simpleStorageInstance.submitFeedback(
+			await blockchainRatingsInstance.submitFeedback(
 				1,
 				testIncorrectRating1,
 				testFeedback,
@@ -100,7 +100,7 @@ contract("SimpleStorage Exceptions", accounts => {
 		}
 
 		try {
-			await simpleStorageInstance.submitFeedback(
+			await blockchainRatingsInstance.submitFeedback(
 				1,
 				testRating1,
 				testIncorrectFeedback,
@@ -118,7 +118,7 @@ contract("SimpleStorage Exceptions", accounts => {
 		}
 
 		// 1st feedback feedback for repeat test, should prevent next feedback
-		await simpleStorageInstance.submitFeedback(
+		await blockchainRatingsInstance.submitFeedback(
 			1,
 			testRating1,
 			testFeedback,
@@ -126,7 +126,7 @@ contract("SimpleStorage Exceptions", accounts => {
 		);
 
 		try {
-			await simpleStorageInstance.submitFeedback(
+			await blockchainRatingsInstance.submitFeedback(
 				1,
 				testRating1,
 				testFeedback,

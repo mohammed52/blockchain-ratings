@@ -1,6 +1,6 @@
-const SimpleStorage = artifacts.require("./SimpleStorage.sol");
+const BlockchainRatings = artifacts.require("./BlockchainRatings.sol");
 
-contract("FeedbackSubmissionTests", accounts => {
+contract("BlockchainRatings FeedbackSubmissionTests", accounts => {
 	var testVendorAddress = accounts[0]; // asks for feedback
 	var testClientAddress = accounts[1]; // gives feedback
 	var testClient2Address = accounts[2]; // asks for feedback
@@ -15,10 +15,10 @@ contract("FeedbackSubmissionTests", accounts => {
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat";
 
 	it("should submit feedback", async () => {
-		const simpleStorageInstance = await SimpleStorage.deployed();
+		const blockchainRatings = await BlockchainRatings.deployed();
 
 		// create first feedbackRequest
-		await simpleStorageInstance.createFeedbackRequest(
+		await blockchainRatings.createFeedbackRequest(
 			testClientAddress,
 			testProjectName,
 			testProjectDescription,
@@ -26,7 +26,7 @@ contract("FeedbackSubmissionTests", accounts => {
 		);
 
 		// give feedback
-		const receipt = await simpleStorageInstance.submitFeedback(
+		const receipt = await blockchainRatings.submitFeedback(
 			1,
 			testRating1,
 			testFeedback,
@@ -60,14 +60,14 @@ contract("FeedbackSubmissionTests", accounts => {
 		);
 
 		// verify feedbackRequestsCounter has correct value in the contract
-		const feedbackSubmissionsCounter = await simpleStorageInstance.feedbackSubmissionsCounter();
+		const feedbackSubmissionsCounter = await blockchainRatings.feedbackSubmissionsCounter();
 
 		assert.equal(
 			feedbackSubmissionsCounter.toNumber(),
 			1,
 			"feedbackSubmissionsCounter must be 1"
 		);
-		const feedbackSubmission = await simpleStorageInstance.feedbackSubmissions(
+		const feedbackSubmission = await blockchainRatings.feedbackSubmissions(
 			1
 		);
 		assert.equal(

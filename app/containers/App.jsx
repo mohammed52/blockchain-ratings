@@ -9,7 +9,7 @@ import styles from "../css/main";
 import bratingsLogo from "../images/bratingsLogo.jpg";
 import favicon from "../images/favicon.png";
 // import MEK from '../images/MEK.png';
-import SimpleStorageContract from "../contracts/SimpleStorage.json";
+import BlockchainRatingsContract from "../contracts/BlockchainRatings.json";
 import getWeb3 from "../utils/getWeb3";
 import { setBlockchainController } from "../actions/blockchainControllerActions";
 
@@ -62,7 +62,7 @@ class App extends Component {
       const accounts = await web3.eth.getAccounts();
 
       // Get the contract instance.
-      const Contract = truffleContract(SimpleStorageContract);
+      const Contract = truffleContract(BlockchainRatingsContract);
       Contract.setProvider(web3.currentProvider);
       const instance = await Contract.deployed();
 
