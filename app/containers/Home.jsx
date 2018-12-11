@@ -117,7 +117,7 @@ class Home extends Component {
           <input
             onChange={this.onChangeClientAddress}
             defaultValue={this.state.defaultClientAddress}
-            required="true"
+            required
             ref={""}
           />
           <br />
@@ -126,7 +126,7 @@ class Home extends Component {
           <input
             onChange={this.onChangeProjectTitle}
             defaultValue={this.state.defaultProjectTitle}
-            required="true"
+            required
             ref={""}
           />
           <br />
@@ -135,7 +135,7 @@ class Home extends Component {
           <input
             onChange={this.onChangeProjectDetails}
             defaultValue={this.state.defaultProjectDetails}
-            required="true"
+            required
             ref={""}
           />
           <br />
