@@ -40,9 +40,9 @@ class App extends Component {
     this.state = {
       cssHasLoaded: false,
       storageValue: 0
-      // web3: null,
-      // accounts: null,
-      // contract: null
+    // web3: null,
+    // accounts: null,
+    // contract: null
     };
     this.handleLoad = this.handleLoad.bind(this);
     // this.runExample = this.runExample.bind(this);
@@ -75,7 +75,7 @@ class App extends Component {
         accounts,
         contract: instance
       });
-    } catch (error) {
+    } catch ( error ) {
       // Catch any errors for any of the above operations.
       alert(
         "Failed to load web3, accounts, or contract. Check console for details."
@@ -85,24 +85,28 @@ class App extends Component {
   };
 
   btnSetValue = async () => {
-    const { accounts, contract } = this.props.blockchainController;
+    const {accounts, contract} = this.props.blockchainController;
 
     // Stores a given value, 5 by default.
-    await contract.set(5, { from: accounts[0] });
+    await contract.set(6, {
+      from: accounts[0]
+    });
 
     // Get the value from the contract to prove it worked.
     // const response = await contract.get();
 
-    // // Update state with the result.
-    // this.setState({ storageValue: response.toNumber() });
+  // // Update state with the result.
+  // this.setState({ storageValue: response.toNumber() });
   };
 
   async btnFetchValue() {
     console.log("fetchValue");
-    const { accounts, contract } = this.props.blockchainController;
+    const {accounts, contract} = this.props.blockchainController;
     const response = await contract.get();
     // Update state with the result.
-    this.setState({ storageValue: response.toNumber() });
+    this.setState({
+      storageValue: response.toNumber()
+    });
   }
 
   handleLoad() {
@@ -120,56 +124,54 @@ class App extends Component {
 
   render() {
     if (!this.props.blockchainController.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return (<div>
+                Loading Web3, accounts, and contract...
+              </div>);
     }
     return (
       <div>
         {!this.state.cssHasLoaded ? (
-          <div />
-        ) : (
-          <div className={styles.mainWrapper}>
-            <div className={styles.headerWrapper2}>
-              <div className={styles.headerWrapper}>
-                <img
-                  src={bratingsLogo}
-                  width="90"
-                  height="90"
-                  className="img-fluid"
-                />
-                <strong>Helpline: 0313-7590210</strong>
-              </div>
-            </div>
-            {this.props.children}
-          </div>
-        )}
-
+         <div />
+         ) : (
+         <div className={styles.mainWrapper}>
+           <div className={styles.headerWrapper2}>
+             <div className={styles.headerWrapper}>
+               <img src={bratingsLogo}
+                    width="90"
+                    height="90"
+                    className="img-fluid" />
+               <strong>Helpline: 0313-7590210</strong>
+             </div>
+           </div>
+           {this.props.children}
+         </div>
+         )}
         <div className="App">
           <h1>Good to Go!</h1>
-          <p>Your Truffle Box is installed and ready.</p>
+          <p>
+            Your Truffle Box is installed and ready.
+          </p>
           <h2>Smart Contract Example</h2>
           <p>
-            If your contracts compiled and migrated successfully, below will
-            show a stored value of 5 (by default).
+            If your contracts compiled and migrated successfully, below will show a stored value of 5 (by default).
           </p>
           <p>
             Try changing the value stored on <strong>line 37</strong> of App.js.
           </p>
-          <div>The stored value is: {this.state.storageValue}</div>
-
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={this.btnFetchValue}
-          >
+          <div>
+            The stored value is:
+            {this.state.storageValue}
+          </div>
+          <button className="btn btn-primary"
+                  type="button"
+                  onClick={this.btnFetchValue}>
             Fetch Value
           </button>
           <br />
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={this.btnSetValue}
-          >
-            Fetch Value
+          <button className="btn btn-primary"
+                  type="button"
+                  onClick={this.btnSetValue}>
+            Set Value
           </button>
         </div>
       </div>
@@ -184,7 +186,7 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     blockchainController: state.blockchainController
-    // newTopic: state.topic.newTopic
+  // newTopic: state.topic.newTopic
   };
 }
 
